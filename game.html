@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+	<title>细菌游戏</title>
+	<link rel="stylesheet" href="game.css">
+</head>
+<body>
+	<div class="wrap">
+		
+		
+	</div>
+<script src="js/zepto.min.js"></script>
+<script type="text/javascript">
+function random(min,max){
+	return min+Math.floor(Math.random()*(max-min))+1;
+}
+var gameConfig={
+	eMinW:100,
+	eMaxW:250,
+	runTime:1500
+};
+var viewport={
+	w:$(window).width(),
+	h:$(window).height()
+};
+var $wrap=$('.wrap');
+
+
+function Pm(){
+	var randomSize=random(gameConfig.eMinW,gameConfig.eMaxW);
+	this.el=$('<div class="yellowgloble" id="yellowgloble"><img src="images/jun_04.png" alt=""></div>').css({width:randomSize*0.1+'%'});
+	var randomWpx=this.el.width();
+	var l=viewport.w-randomWpx;
+	var randomL=random(0,l);
+	this.el.css({left:randomL+'px'});
+	var that=this;
+	$wrap.append(this.el);
+	this.attack=function(){
+		this.el.animate({
+		 translate3d: '0,'+viewport.h+'px,0'
+		}, gameConfig.runTime, 'ease-out',function(){
+			that.el.remove();
+			that.el=null;
+		});
+	}
+	this.attack();
+}
+
+
+$(function(){
+		setInterval(function(){
+			var enememy=new Pm();	
+		},300);
+
+})
+
+
+
+
+
+</script>
+
+</body>
+</html>
